@@ -61,6 +61,7 @@ for i in range(NUM_PAR):
     # blank -> vary; 'N' -> don't vary
     vary_raw = row["Vary?"]
     dont_vary = isinstance(vary_raw, str) and vary_raw.strip().upper() == "N"
+    //print(i, "Type:", dist_type, "Vary?:", repr(vary_raw), "dont_vary:", dont_vary, "Lower:", a, "Upper:", b)
 
     stats[i, 0] = i + 1
 
