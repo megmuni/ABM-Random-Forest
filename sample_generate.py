@@ -4,7 +4,7 @@ Created on Thu Aug  6 14:03:41 2026
 
 @author: mm07
 
-This script samples parameters to use as ABM input.
+Part 1A: This script samples parameters to use as ABM input.
 
 """
 
