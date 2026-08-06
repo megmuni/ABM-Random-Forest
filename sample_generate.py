@@ -4,18 +4,19 @@ Created on Thu Aug  6 14:03:41 2026
 
 @author: mm07
 
-This file samples parameters to use as ABM input.
+This script samples parameters to use as ABM input.
 
 """
 
 import numpy as np
 import pandas as pd
+from scipy.stats import truncnorm
 
 # --- Settings to edit -------------------------------------------------
 INPUT_FILE = "parameters.xlsx"
 SHEET_NAME = "Sheet1"
 OUTPUT_FILE = "input_home.xlsx"
-N_ITER = 5000        # Number of iterations for RF
+N_ITER = 10        # Number of iterations for RF
 NUM_PAR = 67          # Number of parameters
 RNG_SEED = None        # Set an int here for reproducibility, or leave None
 Z_95 = 1.96            # z-score used to convert [lower, upper] into a std dev
