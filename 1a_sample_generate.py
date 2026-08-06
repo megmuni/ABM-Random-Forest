@@ -6,6 +6,16 @@ Created on Thu Aug  6 14:03:41 2026
 
 Part 1A: This script samples parameters to use as ABM input.
 
+For each of the n_par parameters listed in the input file (parameters.xlsx),
+this script generates n_iter random samples according to that parameter's 
+specified distribution type, respecting its hard lower/upper bounds. Parameters
+marked 'N' in the "Vary?" column use their mean/default value for every iter
+instead of being randomly sampled.
+
+Output: input_home.xlsx, an (n_iter x n_par) matrix where each row is one full
+param set (i.e., all params for one ABM run) and each column is one parameter,
+all in the same order as the rows of the input file (parameter.xlsx).
+
 """
 
 import numpy as np
@@ -13,16 +23,15 @@ import pandas as pd
 from scipy.stats import truncnorm
 
 # --- Settings to edit -------------------------------------------------
-INPUT_FILE = "parameters.xlsx"
-SHEET_NAME = "Sheet1"
-OUTPUT_FILE = "input_home.xlsx"
-N_ITER = 10        # Number of iterations for RF
-NUM_PAR = 67          # Number of parameters
-RNG_SEED = None        # Set an int here for reproducibility, or leave None
-Z_95 = 1.96            # z-score used to convert [lower, upper] into a std dev
+input_file = "parameters.xlsx"
+sheet_name = "Sheet1"
+output_file = "input_home.xlsx"
+n_iter = 10        # Number of iterations for RF
+n_par = 67          # Number of parameters
+rng_seed = None        # Set an int here for reproducibility, or leave None
 # -----------------------------------------------------------------------
 
-rng = np.random.default_rng(RNG_SEED)
+rng = np.random.default_rng(rng_seed)
 
 def sample_truncnorm(mean, sigma, lower, upper, size, rng):
     """
@@ -44,13 +53,13 @@ def sample_truncnorm(mean, sigma, lower, upper, size, rng):
 #                3=normal, 4=uniform
 #   'Vary?'   -> blank=vary this parameter, 'N'=use Mean for every run
 
-df = pd.read_excel(INPUT_FILE, sheet_name=SHEET_NAME)
-df = df.iloc[:NUM_PAR].reset_index(drop=True)
+df = pd.read_excel(input_file, sheet_name=sheet_name)
+df = df.iloc[:n_par].reset_index(drop=True)
 
-samples = np.zeros((N_ITER, NUM_PAR))
-stats = np.zeros((NUM_PAR, 5))  # [index, mean/log-mean, std/log-std, min, max]
+samples = np.zeros((n_iter, n_par))
+stats = np.zeros((n_par, 5))  # [index, mean/log-mean, std/log-std, min, max]
 
-for i in range(NUM_PAR):
+for i in range(n_par):
     row = df.iloc[i]
     a = row["Lower"]
     b = row["Upper"]
@@ -61,13 +70,13 @@ for i in range(NUM_PAR):
     # blank -> vary; 'N' -> don't vary
     vary_raw = row["Vary?"]
     dont_vary = isinstance(vary_raw, str) and vary_raw.strip().upper() == "N"
-    //print(i, "Type:", dist_type, "Vary?:", repr(vary_raw), "dont_vary:", dont_vary, "Lower:", a, "Upper:", b)
+    #print(i, "Type:", dist_type, "Vary?:", repr(vary_raw), "dont_vary:", dont_vary, "Lower:", a, "Upper:", b)
 
     stats[i, 0] = i + 1
 
     # --- If not varying, just use the Mean value for every iteration ---
     if dont_vary:
-        r = np.full(N_ITER, mean_val, dtype=float)
+        r = np.full(n_iter, mean_val, dtype=float)
         samples[:, i] = r
         stats[i, 1] = mean_val
         stats[i, 2] = 0.0
@@ -81,7 +90,7 @@ for i in range(NUM_PAR):
         # SD column is on the linear scale (Upper - Lower)/2; convert to an
         # approximate log-scale sigma the same way (using log-bounds).
         sigma = (np.log(b) - np.log(a)) / 2
-        log_r = sample_truncnorm(mu, sigma, np.log(a), np.log(b), N_ITER, rng)
+        log_r = sample_truncnorm(mu, sigma, np.log(a), np.log(b), n_iter, rng)
         r = np.exp(log_r)
         samples[:, i] = r
         stats[i, 1] = np.mean(np.log(r))
@@ -91,7 +100,7 @@ for i in range(NUM_PAR):
     elif dist_type == 2:
         mu = np.log(mean_val)
         sigma = (np.log(b) - np.log(a)) / 2
-        log_x = sample_truncnorm(mu, sigma, np.log(a), np.log(b), N_ITER, rng)
+        log_x = sample_truncnorm(mu, sigma, np.log(a), np.log(b), n_iter, rng)
         x = np.exp(log_x)
         y = np.floor(x)
         frac = x - y
@@ -103,14 +112,14 @@ for i in range(NUM_PAR):
 
     # --- Type 3: normal, truncated to [a, b] (hard bounds) ---
     elif dist_type == 3:
-        r = sample_truncnorm(mean_val, sd, a, b, N_ITER, rng)
+        r = sample_truncnorm(mean_val, sd, a, b, n_iter, rng)
         samples[:, i] = r
         stats[i, 1] = np.mean(r)
         stats[i, 2] = np.std(r, ddof=1)
 
     # --- Type 4: uniform between lower and upper bound ---
     elif dist_type == 4:
-        r = rng.uniform(a, b, N_ITER)
+        r = rng.uniform(a, b, n_iter)
         samples[:, i] = r
         stats[i, 1] = np.mean(r)
         stats[i, 2] = np.std(r, ddof=1)
@@ -123,6 +132,6 @@ for i in range(NUM_PAR):
 
 # --- Save sampled parameter matrix --------------------------------------
 samples_df = pd.DataFrame(samples)
-samples_df.to_excel(OUTPUT_FILE, sheet_name="Sheet1", index=False, header=False)
+samples_df.to_excel(output_file, sheet_name="Sheet1", index=False, header=False)
 
-print(f"Done. Wrote {N_ITER} samples for {NUM_PAR} parameters to '{OUTPUT_FILE}'.")
+print(f"Done. Wrote {n_iter} samples for {n_par} parameters to '{output_file}'.")

@@ -7,6 +7,11 @@ Created on Thu Aug  6 14:54:46 2026
 Part 1B: This script generates individual config files to use as ABM input, 
 based on the output from sample_generate.py (1A).
 
+Takes the parameter matrix produced by 1A (input_home.xlsx) and, for each row
+(i.e., one sampled parameter set) produces a full copy of the ABM's JSON config
+template with only the parameters changed. All other config sections
+(world init, chemistry, etc.) are copied through unchanged. 
+
 """
 
 import pandas as pd
@@ -14,14 +19,14 @@ import re
 from pathlib import Path
 
 # --- Settings to edit -------------------------------------------------
-TEMPLATE_FILE = "simulation_config.template.json"
-SAMPLES_FILE = "input_home.xlsx"   # output of Part 1A: rows = iterations, cols = params, in order
-OUTPUT_DIR = Path("samples")
-BIOLOGY_KEY_RE = re.compile(r'^\s*"biology"\s*:')
+template_file = "simulation_config.template.json"
+samples_file = "input_home.xlsx"   # output of Part 1A: rows = iterations, cols = params, in order
+output_dir = Path("samples")
+bio_key_re = re.compile(r'^\s*"biology"\s*:')
 # -----------------------------------------------------------------------
 
 # Matches lines like:  "key": 12.34,   // anything at all (including N/A)
-LINE_RE = re.compile(
+line_re = re.compile(
     r'^(?P<prefix>\s*"[^"]+"\s*:\s*)'
     r'(?P<value>-?\d+\.?\d*)'
     r'(?P<suffix>,?\s*//.*)$'
@@ -39,10 +44,10 @@ def find_variable_line_indices(lines):
     in_biology = False
     for i, line in enumerate(lines):
         if not in_biology:
-            if BIOLOGY_KEY_RE.match(line):
+            if bio_key_re.match(line):
                 in_biology = True
             continue
-        m = LINE_RE.match(line)
+        m = line_re.match(line)
         if m:
             idxs.append(i)
     return idxs
@@ -50,7 +55,7 @@ def find_variable_line_indices(lines):
 def write_sample_config(lines, var_idxs, values, out_path):
     new_lines = lines.copy()
     for idx, val in zip(var_idxs, values):
-        m = LINE_RE.match(new_lines[idx])
+        m = line_re.match(new_lines[idx])
         prefix, suffix = m.group("prefix"), m.group("suffix") or ""
         val_str = str(int(val)) if float(val).is_integer() else f"{val:.6g}"
         new_lines[idx] = f"{prefix}{val_str}{suffix}\n"
@@ -58,11 +63,11 @@ def write_sample_config(lines, var_idxs, values, out_path):
         f.writelines(new_lines)
 
 def main():
-    lines = load_template_lines(TEMPLATE_FILE)
+    lines = load_template_lines(template_file)
     var_idxs = find_variable_line_indices(lines)
     print(f"Found {len(var_idxs)} //-tagged variable parameters under 'biology'.")
 
-    samples_df = pd.read_excel(SAMPLES_FILE, header=None)
+    samples_df = pd.read_excel(samples_file, header=None)
     n_iter, n_params = samples_df.shape
 
     if n_params != len(var_idxs):
@@ -72,13 +77,13 @@ def main():
             f"Part 1A's parameter order/count matches the template's tagged-line order."
         )
 
-    OUTPUT_DIR.mkdir(exist_ok=True)
+    output_dir.mkdir(exist_ok=True)
     for num in range(n_iter):
         values = samples_df.iloc[num].values
-        out_path = OUTPUT_DIR / f"sample{num + 1}.json"
+        out_path = output_dir / f"sample{num + 1}.json"
         write_sample_config(lines, var_idxs, values, out_path)
 
-    print(f"Wrote {n_iter} config files to '{OUTPUT_DIR}/'")
+    print(f"Wrote {n_iter} config files to '{output_dir}/'")
     
 if __name__ == "__main__":
     main()
