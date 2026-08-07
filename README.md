@@ -2,7 +2,7 @@
 Contains the Random Forest sensitivity analysis workflow for VUA Lab biomaterial ABMs
 
 ## Overview
-This workflow follows the same overall steps as the Random Forest (RF) sensitivity analysis procedure described in [Garg et al., 2019](https://pmc.ncbi.nlm.nih.gov/articles/PMC6675024/). The previous workflow can be found at [https://github.com/VF-ABM/RF-SPOTPY](https://github.com/VF-ABM/RF-SPOTPY). 
+This workflow follows the same overall steps as the Random Forest (RF) sensitivity analysis procedure described in [Garg et al., 2019](https://pmc.ncbi.nlm.nih.gov/articles/PMC6675024/). The previous workflow can be found at [https://github.com/VF-ABM/RF-SPOTPY](https://github.com/VF-ABM/RF-SPOTPY).
 
 Random Forest (RF) is a machine learning algorithm that optimizes weighted trees from input parameters. The algorithm takes a set of weighted trees and computes a GINI index for each parameter that was used in the trees, as an indicator of its significance to the ABM. In sensitivity analysis, we try to determine which parameters are most important to the ABM; in other words, we want to compute the GINI indices of all of the ABM parameters and rank them.
 
@@ -21,3 +21,12 @@ The following settings can be edited:
 
 ### Part 1B: Turn sampled parameters into config files to use as ABM input (`1b_generate.py`)
 The output from 1A (`input_home.xlsx`) is used as input for this script. It outputs a directory called `samples`, which contains `n_iter` config files following the structure of `simulation_config.template.json`.
+
+## Step 2: Generate data with the ABM, using the sampled paramaters, for RF to learn from
+### Part 2A: Running the model on the cluster
+1. If your sampled parameters (the folder "samples") are not in the ABM-Random-Forest repo by default, manually upload them to the cluster
+   using the [Globus file manager](https://globus.alliancecan.ca).
+1. Edit the `SBATCH` settings and other variables in the settings block to align with your file paths and names
+1. Run RF_ABM.sh (`sbatch RF_ABM.sh`). The script will copy executables over from your ABM directory, submit simulation jobs (in batches)
+   for each of the sampled parameter sets, and collect the output.
+1. Download the ABM outputs (`/output/output_home/`).
