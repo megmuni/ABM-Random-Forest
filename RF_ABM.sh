@@ -13,7 +13,7 @@
 # Driver script for submitting a full Random Forest sensitivity sweep as
 # individual cluster jobs, one job per sampled parameter set.
 #
-# Usage: ./RF_ABM.sh /path/to/ABM-directory
+# Usage: sbatch RF_ABM.sh /path/to/ABM-directory
 
 set -euo pipefail
 module load cuda
