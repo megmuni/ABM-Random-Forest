@@ -170,7 +170,7 @@ do
     # Submit this run as its own job, capturing its printed output (assumed
     # to include Slurm's standard "Submitted batch job <ID>" line) into a
     # variable instead of letting it print straight to the terminal.
-    SUBMIT_OUTPUT="$(./scripts/submit_testrun.sh "$EMAIL" --quiet-mail --numticks 200 --time 0-00:45:00)"
+    SUBMIT_OUTPUT="$(./scripts/submit_testrun.sh "$EMAIL" --account rrg-nicoleli --quiet-mail --numticks 200 --time 0-00:45:00)"
 
     # Isolate just the "Submitted batch job <ID>" line (sbatch's standard
     # confirmation message, echoed verbatim by submit_testrun.sh), then pull
