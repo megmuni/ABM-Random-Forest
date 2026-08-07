@@ -200,7 +200,7 @@ done
 # waiting for a submission slot to free up. Once the loop exits, there may
 # still be tracked jobs (the last batch) that haven't finished yet -- so we
 # keep checking and collecting until PENDING_JOBS is completely empty.
-echo "All $NUM_SAMPLES sample jobs submitted. Waiting for remaining jobs to finish ..."
+echo "All $N_SAMPLES sample jobs submitted. Waiting for remaining jobs to finish ..."
 while [ "${#PENDING_JOBS[@]}" -gt 0 ]; do
     echo "  [$(date '+%Y-%m-%d %H:%M:%S')] ${#PENDING_JOBS[@]} job(s) still outstanding. Waiting ${POLL_INTERVAL_SECONDS}s..."
     process_finished_jobs
