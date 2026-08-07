@@ -171,13 +171,12 @@ do
     # Submit this run as its own job, capturing its printed output (assumed
     # to include Slurm's standard "Submitted batch job <ID>" line) into a
     # variable instead of letting it print straight to the terminal.
-    SUBMIT_OUTPUT="$(./submit_testrun.sh --numticks 200 --time 0-00:45:00)"
+    SUBMIT_OUTPUT="$(./submit_testrun.sh "$EMAIL" --quiet-mail --numticks 200 --time 0-00:45:00)"
 
-    # Extract just the numeric job ID from that output using grep + a
-    # regex: -o prints only the matched text (not the whole line), -E
-    # enables extended regex, and [0-9]+ matches one or more digits at
-    # the end of the "Submitted batch job <ID>" line.
-    JOBID="$(echo "$SUBMIT_OUTPUT" | grep -oE '[0-9]+$')"
+    # Isolate just the "Submitted batch job <ID>" line (sbatch's standard
+    # confirmation message, echoed verbatim by submit_testrun.sh), then pull
+    # out only the trailing digits from that specific line.
+    JOBID="$(echo "$SUBMIT_OUTPUT" | grep 'Submitted batch job' | grep -oE '[0-9]+$')"
 
     if [ -z "$JOBID" ]; then
         # If we couldn't parse a job ID, we have no way to later find and
