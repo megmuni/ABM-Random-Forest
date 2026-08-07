@@ -42,6 +42,7 @@ fi
 
 # copies the ABM executables folder from the ABM directory
 echo "Copying bin/ from $ABM_DIR ..."
+mkdir -p ./build
 cp -r "$ABM_DIR/build/bin" ./build/bin
 
 # copies the ABM config files folder from the ABM directory
