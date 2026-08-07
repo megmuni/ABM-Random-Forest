@@ -45,7 +45,7 @@ echo "Copying bin/ from $ABM_DIR ..."
 cp -r "$ABM_DIR/bin" ./bin
 
 # copies the ABM config files folder from the ABM directory
-cho "Copying configFiles/ from $ABM_DIR ..."
+echo "Copying configFiles/ from $ABM_DIR ..."
 cp -r "$ABM_DIR/configFiles" ./configFiles
 
 # copies the submit_testrun script(s) from /ABM-drectory/scripts/
