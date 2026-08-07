@@ -1,7 +1,7 @@
 #!/bin/bash
 # RF_ABM.sh
 #
-#SBATCH --account=[account here]
+#SBATCH --account=def-nicoleli
 #SBATCH --time=0-05:00:00
 #SBATCH --cpus-per-task=1
 #SBATCH --mem=2000M
