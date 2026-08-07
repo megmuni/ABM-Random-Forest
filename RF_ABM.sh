@@ -13,7 +13,7 @@
 # Driver script for submitting a full Random Forest sensitivity sweep as
 # individual cluster jobs, one job per sampled parameter set.
 #
-# Usage: sbatch RF_ABM.sh /path/to/ABM-directory
+# Usage: sbatch RF_ABM.sh
 
 set -euo pipefail
 module load cuda
@@ -22,6 +22,7 @@ module load cuda
 N_SAMPLES=10              # Total number of RF sample runs (matches Part 1A/1B)
 MAX_CONCURRENT_JOBS=900        # conservative job cap based on cluster's limit of 1000
 POLL_INTERVAL_SECONDS=180       # How often to re-check the job queue while waiting
+ABM_DIR="/path/to/ABM_DIR"      # Path to the ABM repo (contains bin/, configFiles/, etc.)
 OUTPUT_DIR="./output"           # where each job writes its own job_[jobID]/ subfolder
 OUTPUT_HOME_DIR="./output/output_home"  # where final per-sample CSVs are collected
 EMAIL="your.email@mail.mcgill.ca" # required by submit_testrun.sh, but --quiet-mail
@@ -32,14 +33,6 @@ EMAIL="your.email@mail.mcgill.ca" # required by submit_testrun.sh, but --quiet-m
 # are submitted below, and entries are removed once that job's output has
 # been copied into output_home/ and its job_[jobID]/ folder deleted
 declare -A PENDING_JOBS
-
-if [ $# -lt 1 ]; then
-    echo "Usage: $0 /path/to/ABM_DIR"   # $0 is the script's own name
-    exit 1
-fi
-
-# $1 is the first CLI argument - path to ABM directory
-ABM_DIR="$1"
 
 # -d checks that the path exists AND is a directory (not a file)
 if [ ! -d "$ABM_DIR" ]; then
