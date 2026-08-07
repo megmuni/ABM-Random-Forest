@@ -7,7 +7,7 @@
 #SBATCH --mem=2000M
 #SBATCH --output=RF_ABM_driver_%j.out
 #SBATCH --error=RF_ABM_driver_%j.err
-#SBATCH --mail-user=[email here]
+#SBATCH --mail-user=meghana.munipalle@mail.mcgill.ca
 #SBATCH --mail-type=END,FAIL
 #
 # Driver script for submitting a full Random Forest sensitivity sweep as
@@ -22,10 +22,10 @@ module load cuda
 N_SAMPLES=10              # Total number of RF sample runs (matches Part 1A/1B)
 MAX_CONCURRENT_JOBS=900        # conservative job cap based on cluster's limit of 1000
 POLL_INTERVAL_SECONDS=180       # How often to re-check the job queue while waiting
-ABM_DIR="/path/to/ABM_DIR"      # Path to the ABM repo (contains bin/, configFiles/, etc.)
+ABM_DIR="../IVDBM-ABM/"      # Path to the ABM repo (contains bin/, configFiles/, etc.)
 OUTPUT_DIR="./output"           # where each job writes its own job_[jobID]/ subfolder
 OUTPUT_HOME_DIR="./output/output_home"  # where final per-sample CSVs are collected
-EMAIL="your.email@mail.mcgill.ca" # required by submit_testrun.sh, but --quiet-mail
+EMAIL="meghana.munipalle@mail.mcgill.ca" # required by submit_testrun.sh, but --quiet-mail
                                   # below suppresses notifications for the batch
 
 # Associative array (bash "map") tracking which sample number each
@@ -170,7 +170,7 @@ do
     # Submit this run as its own job, capturing its printed output (assumed
     # to include Slurm's standard "Submitted batch job <ID>" line) into a
     # variable instead of letting it print straight to the terminal.
-    SUBMIT_OUTPUT="$(./submit_testrun.sh "$EMAIL" --quiet-mail --numticks 200 --time 0-00:45:00)"
+    SUBMIT_OUTPUT="$(./scripts/submit_testrun.sh "$EMAIL" --quiet-mail --numticks 200 --time 0-00:45:00)"
 
     # Isolate just the "Submitted batch job <ID>" line (sbatch's standard
     # confirmation message, echoed verbatim by submit_testrun.sh), then pull
