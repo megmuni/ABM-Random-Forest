@@ -49,11 +49,9 @@ echo "Copying configFiles/ from $ABM_DIR ..."
 cp -r "$ABM_DIR/configFiles" ./configFiles
 
 # copies the submit_testrun script(s) from /ABM-drectory/scripts/
-echo "Copying submit_testrun.sh from $ABM_DIR/scripts/ ..."
-cp "$ABM_DIR/scripts/submit_testrun.sh" ./submit_testrun.sh
-cp "$ABM_DIR/scripts/testrun.sbatch" ./testrun.sbatch
-cp "$ABM_DIR/scripts/job_defaults.env" ./job_defaults.env
-chmod +x ./submit_testrun.sh # make sure it has run permission
+echo "Copying scripts/ from $ABM_DIR ..."
+cp -r "$ABM_DIR/scripts" ./scripts
+chmod +x ./scripts/submit_testrun.sh # make sure it has run permission
 
 # makes output directories
 echo "Creating output directories ..."
