@@ -1,0 +1,11 @@
+10 of 10 samples excluded:
+  sample 1: failed to read/parse (could not convert string to float: 'clock (30 min)')
+  sample 2: failed to read/parse (could not convert string to float: 'clock (30 min)')
+  sample 3: failed to read/parse (could not convert string to float: 'clock (30 min)')
+  sample 4: failed to read/parse (could not convert string to float: 'clock (30 min)')
+  sample 5: failed to read/parse (could not convert string to float: 'clock (30 min)')
+  sample 6: failed to read/parse (could not convert string to float: 'clock (30 min)')
+  sample 7: failed to read/parse (could not convert string to float: 'clock (30 min)')
+  sample 8: failed to read/parse (could not convert string to float: 'clock (30 min)')
+  sample 9: failed to read/parse (could not convert string to float: 'clock (30 min)')
+  sample 10: failed to read/parse (could not convert string to float: 'clock (30 min)')
