@@ -24,7 +24,7 @@ input_home_file = "input_home.xlsx"          # produced by Part 1A
 filtered_input_file = "input_home_filtered.xlsx"
 bad_samples_log = "bad_samples.txt"
 
-timepoint_rows = { # row indices for different timepoints
+TIMEPOINT_ROWS = { # row indices for different timepoints
     "day0": 1 - 1,
     "day1": 49 - 1,
     "day2": 97 - 1,
@@ -74,7 +74,7 @@ def check_sample(num):
 def main():
     # collect rows for each timepoint, keyed by sample number so results
     # from different timepoints stay aligned to the same set of good samples
-    timepoint_rows = {tp: [] for tp in timepoint_rows}
+    timepoint_rows = {tp: [] for tp in TIMEPOINT_ROWS}
     good_sample_numbers = []
     bad_samples = []  # list of (sample_num, reason) tuples, for logging
  
