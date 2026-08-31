@@ -18,9 +18,10 @@ The following settings can be edited:
 | n_par       | `67`                | Number of parameters                                                                                                                                   |
 | rng_seed    | `None`              | Set an int here for reproducibility, or leave None                                                                                                     |
 
-
 ### Part 1B: Turn sampled parameters into config files to use as ABM input (`1b_generate.py`)
 The output from 1A (`input_home.xlsx`) is used as input for this script. It outputs a directory called `samples`, which contains `n_iter` config files following the structure of `simulation_config.template.json`.
+
+
 
 ## Step 2: Generate data with the ABM, using the sampled paramaters, for RF to learn from
 ### Part 2A: Running the model on the cluster
@@ -41,6 +42,8 @@ The following settings can be edited:
 | filtered_input_file | `"input_home_filtered.xlsx"` | Will create a new (filtered) input_home file if necessary, if there are bad runs that need to be excluded from RF                                      |
 | bad_samples_log     | `"bad_samples.txt"`          | Number of parameters                                                                                                                                   |
 | TIMEPOINT_ROWS      |                              | Row indices for different timepoints                                                                                                                   |
+
+
 
 ## Step 3: Perform RF sensitivity analysis (`3_randomforest.py`)
 The following settings can be edited:
