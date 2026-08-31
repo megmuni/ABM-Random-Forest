@@ -22,6 +22,7 @@ The following settings can be edited:
 The output from 1A (`input_home.xlsx`) is used as input for this script. It outputs a directory called `samples`, which contains `n_iter` config files following the structure of `simulation_config.template.json`.
 
 <br>
+
 ## Step 2: Generate data with the ABM, using the sampled paramaters, for RF to learn from
 ### Part 2A: Running the model on the cluster
 1. If your sampled parameters (the folder "samples") are not in the ABM-Random-Forest repo by default, manually upload them to the cluster
@@ -43,6 +44,7 @@ The following settings can be edited:
 | TIMEPOINT_ROWS      |                              | Row indices for different timepoints                                                                                                                   |
 
 <br>
+
 ## Step 3: Perform RF sensitivity analysis (`3_randomforest.py`)
 The following settings can be edited:
 | Variable    | Default             | Description                                                                                                                               |
