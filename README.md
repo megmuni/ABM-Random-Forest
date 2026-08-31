@@ -5,7 +5,7 @@ Contains the Random Forest sensitivity analysis workflow for VUA Lab biomaterial
 This workflow follows the same overall steps as the Random Forest (RF) sensitivity analysis procedure described in [Garg et al., 2019](https://pmc.ncbi.nlm.nih.gov/articles/PMC6675024/). The previous workflow can be found at [https://github.com/VF-ABM/RF-SPOTPY](https://github.com/VF-ABM/RF-SPOTPY).
 
 Random Forest (RF) is a machine learning algorithm that optimizes weighted trees from input parameters. The algorithm takes a set of weighted trees and computes a GINI index for each parameter that was used in the trees, as an indicator of its significance to the ABM. In sensitivity analysis, we try to determine which parameters are most important to the ABM; in other words, we want to compute the GINI indices of all of the ABM parameters and rank them.
-
+<br>
 ## Step 1: Generate randomly sampled parameter sets as ABM input
 ### Part 1A: Sample parameters to use as ABM input (`1a_sample_generate.py`)
 The following settings can be edited:
@@ -21,8 +21,7 @@ The following settings can be edited:
 ### Part 1B: Turn sampled parameters into config files to use as ABM input (`1b_generate.py`)
 The output from 1A (`input_home.xlsx`) is used as input for this script. It outputs a directory called `samples`, which contains `n_iter` config files following the structure of `simulation_config.template.json`.
 
-
-
+<br>
 ## Step 2: Generate data with the ABM, using the sampled paramaters, for RF to learn from
 ### Part 2A: Running the model on the cluster
 1. If your sampled parameters (the folder "samples") are not in the ABM-Random-Forest repo by default, manually upload them to the cluster
@@ -43,8 +42,7 @@ The following settings can be edited:
 | bad_samples_log     | `"bad_samples.txt"`          | Number of parameters                                                                                                                                   |
 | TIMEPOINT_ROWS      |                              | Row indices for different timepoints                                                                                                                   |
 
-
-
+<br>
 ## Step 3: Perform RF sensitivity analysis (`3_randomforest.py`)
 The following settings can be edited:
 | Variable    | Default             | Description                                                                                                                               |
