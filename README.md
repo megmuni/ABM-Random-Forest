@@ -30,3 +30,27 @@ The output from 1A (`input_home.xlsx`) is used as input for this script. It outp
 1. Run RF_ABM.sh (`sbatch RF_ABM.sh`). The script will copy executables over from your ABM directory, submit simulation jobs (in batches)
    for each of the sampled parameter sets, and collect the output.
 1. Download the ABM outputs (`/output/output_home/`).
+
+### Part 2B: Preparing the output data (`2b_process_output.py`)
+The following settings can be edited:
+| Variable            | Default                      | Description                                                                                                                                            |
+|---------------------|------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| n_samples           | `10`                         | Number of RF runs that were executed (matches n_iter in Part 1A)                                                                                       |
+| output_dir          | `"Output_home"`              | Where the output_<N>.csv files live (from the ABM in Part 2A)                                                                                          |
+| input_home_file     | `"input_home.xlsx"`          | Produced by Part 1A                                                                                                                                    |
+| filtered_input_file | `"input_home_filtered.xlsx"` | Will create a new (filtered) input_home file if necessary, if there are bad runs that need to be excluded from RF                                      |
+| bad_samples_log     | `"bad_samples.txt"`          | Number of parameters                                                                                                                                   |
+| TIMEPOINT_ROWS      |                              | Row indices for different timepoints                                                                                                                   |
+
+## Step 3: Perform RF sensitivity analysis (`3_randomforest.py`)
+1. The following settings can be edited:
+| Variable    | Default             | Description                                                                                                                               |
+|-------------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| random_seed | `1`                 | Random seed for reproducibility                                                                                                           |
+| n_trees     | `500`               | Number of trees to use in Random Forest (n should be large enough to converge, but will take longer for very large n)                     |
+| input_file  | `"input_home.xlsx"` | Cleaned/filtered input file                                                                                                               |
+| output_file | `"day3.xlsx"`       | output file for the timepoint to run RF on                                                                                                |
+| model_type  | `"classification"`  | Model type can be regression or classification - classification treats every value of Y as its own category (equivalent to factor() in R) |
+1. Choose which output you want to run RF on (e.g., collagen, cell type, etc.) For example, if you select `day3.xlsx` in `output_file` and run RF for collagen in `main()`, the results are giving you the significance of each parameter to the amount of collagen in the model at Day 3.
+1. The script produces a variable importance plot, ranking each of the parameters' significance with respect to your biomarker of choice, based on mean decrease in impurity in the Random Forest.
+
