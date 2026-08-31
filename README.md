@@ -43,8 +43,7 @@ The following settings can be edited:
 | TIMEPOINT_ROWS      |                              | Row indices for different timepoints                                                                                                                   |
 
 ## Step 3: Perform RF sensitivity analysis (`3_randomforest.py`)
-1. The following settings can be edited:
-
+The following settings can be edited:
 | Variable    | Default             | Description                                                                                                                               |
 |-------------|---------------------|-------------------------------------------------------------------------------------------------------------------------------------------|
 | random_seed | `1`                 | Random seed for reproducibility                                                                                                           |
