@@ -81,22 +81,22 @@
       "proliferation": {
         "description": "Shared proliferation timing and NP proliferation probability terms",
         "hours_between_proliferation": 24, // k2
-        "tgf_threshold": 73.2665, // k3
-        "log_scale": 0.00740655, // k4
-        "log_offset": 0.358879 // k5
+        "tgf_threshold": 44.8565, // k3
+        "log_scale": 0.680846, // k4
+        "log_offset": 0.251162 // k5
       },
       "cytokine_synthesis": {
         "description": "Shared cytokine synthesis feedback coefficients (Stem/Progen/NP create_cytokines)",
-        "tgf_baseline": 9.3968, // k8
-        "tgf_feedback_tgf": 0.101929, // k9
-        "tgf_feedback_il1beta": 1.50892, // k10
-        "tgf_feedback_tnf": 1.99382, // k11
-        "tnf_baseline": 2.72992, // k12
-        "tnf_feedback_il1beta": 5.2857, // k13
-        "tnf_feedback_tgf_denom": 1.3469, // k14
-        "il1beta_baseline": 1.36488, // k15
-        "il1beta_feedback_tnf": 1.32132, // k16
-        "il1beta_feedback_tgf_denom": 2.59968 // k17
+        "tgf_baseline": 19.4025, // k8
+        "tgf_feedback_tgf": 0.0109011, // k9
+        "tgf_feedback_il1beta": 19.3556, // k10
+        "tgf_feedback_tnf": 2.43677, // k11
+        "tnf_baseline": 1.87184, // k12
+        "tnf_feedback_il1beta": 2.17428, // k13
+        "tnf_feedback_tgf_denom": 1.03774, // k14
+        "il1beta_baseline": 4.69095, // k15
+        "il1beta_feedback_tnf": 3.59907, // k16
+        "il1beta_feedback_tgf_denom": 6.7562 // k17
       }
     },
     "stem": {
@@ -109,90 +109,91 @@
       },
       "cytokine_synthesis": {
         "description": "MSC baseline cytokine secretion rates",
-        "tgf_baseline": 1.10108, // m8
+        "tgf_baseline": 8.11763, // m8
         "tnf_baseline": 0, // m9
         "il1beta_baseline": 0 // m10
       },
       "collagen_synthesis": {
-        "baseline_rate": 3.54354 // m11
+        "baseline_rate": 24.7276 // m11
       },
       "aggrecan_synthesis": {
         "tgf_threshold": 100000 // m12
       },
       "proliferation": {
-        "tgf_threshold": 21.2209, // m3
-        "tnf_effect": 0.728091, // m5
-        "il1beta_effect": 0.253163, // m6
-        "elasticity_effect": 0.102931 // m7
+        "tgf_threshold": 27.6799, // m3
+        "static_probability": 11.1454, // m4
+        "tnf_effect": 0.266022, // m5
+        "il1beta_effect": 0.0589713, // m6
+        "elasticity_effect": 0.00356673 // m7
       },
       "differentiation": {
         "asymmetric_probability": 0.7, // m13
+        "static_probability": 67.0286, // m14
         "baseline_probability": 0.5, // m15
-        "tgf_effect": 0.00807316, // m16
-        "hours_between_attempts": 47.5614 // m17
+        "tgf_effect": 0.0243817, // m16
+        "hours_between_attempts": 48 // m17
       }
     },
     "progen": {
-      "ocr_fmol_per_hour_per_cell": 56.423, // N/A
-      "apoptosis_chance": 0.5, // N/A
+      "ocr_fmol_per_hour_per_cell": 30.46, // N/A
+      "apoptosis_chance": 0.001, // N/A
       "migration": {
         "elasticity_effect": 0.11, // p1
         "baseline_speed": 0.83 // p2
       },
       "cytokine_synthesis": {
-        "tgf_baseline": 1.02993, // p4
-        "tnf_baseline": 8.76563, // p5
+        "tgf_baseline": 2.13026, // p4
+        "tnf_baseline": 1.17617, // p5
         "il1beta_baseline": 0 // p6
       },
       "aggrecan_synthesis": {
-        "baseline_rate": 2.19462 // p7
+        "baseline_rate": 1.75239 // p7
+      },
+      "differentiation": {
+        "static_probability": 44.0481 // N/A
       }
     },
     "np": {
-      "ocr_fmol_per_hour_per_cell": 37.3262, // N/A
-      "apoptosis_chance": 2.5, // N/A
+      "ocr_fmol_per_hour_per_cell": 15.31, // N/A
+      "apoptosis_chance": 9, // N/A
       "migration": {
         "elasticity_effect": 0.11, // k0
         "baseline_speed": 1.3 // k1
       },
       "collagen_synthesis": {
-        "scaling_factor": 46.6248, // k18
-        "time_effect": 0.650514, // k19
-        "baseline_rate": 30.9774 // k20
+        "scaling_factor": 29.7941, // k18
+        "time_effect": 37.0591, // k19
+        "baseline_rate": 35.9417 // k20
       },
       "aggrecan_synthesis": {
-        "scaling_factor": 6.04692, // k21
-        "time_effect": 10.836, // k22
-        "baseline_rate": 27.0083 // k23
+        "scaling_factor": 156.967, // k21
+        "time_effect": 304.287, // k22
+        "baseline_rate": 16.2466 // k23
       }
     },
     "biomaterial": {
       "elastic_modulus": {
         "description": "Ca-Alg hydrogel elastic modulus regression (initializeCaAlg)",
-        "intercept": 125, // c1
-        "alginate_concentration": 58, // c2
-        "crosslinker_density": 971, // c3
-        "alginate_molecular_weight": 1.037, // c4
-        "alginate_crosslinker_interaction": 756, // c5
-        "alginate_mw_interaction": 0.516, // c6
-        "mw_crosslinker_interaction": 0.165 // c7
+        "intercept": -1.619, // c1
+        "crosslinker_density": 8592, // c2
+        "alginate_molecular_weight": 0.0015 // c3
       },
       "pore_size": {
-        "crosslinker_effect": 1769.8, // c8
-        "baseline": 258.5 // c9
+        "crosslinker_effect": 1769.8, // c4
+        "baseline": 258.5 // c5
       },
       "mass_loss": {
-        "baseline": 0.234, // c10
-        "crosslinker_effect": 7.785, // c11
-        "time_effect": 0.15, // c12
-        "crosslinker_time_interaction": 1.36 // c13
+        "baseline": 0.234, // c6
+        "crosslinker_effect": 7.785, // c7
+        "time_effect": 0.15, // c8
+        "crosslinker_time_interaction": 1.36 // c9
       },
       "swell_ratio": {
-        "baseline": 72.478, // c14
-        "time_effect": 0.131, // c15
-        "alginate_concentration_effect": 22.034, // c16
-        "time_crosslinker_interaction": 3.284, // c17
-        "alginate_crosslinker_interaction": 35.752 // c18
+        "baseline": 72.478, // c10
+        "time_effect": 0.131, // c11
+        "alginate_concentration_effect": 22.034, // c12
+        "time_crosslinker_interaction": 3.284, // c13
+        "alginate_crosslinker_interaction": 35.752 // c14
       }
     }
   }

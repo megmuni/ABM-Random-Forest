@@ -81,22 +81,22 @@
       "proliferation": {
         "description": "Shared proliferation timing and NP proliferation probability terms",
         "hours_between_proliferation": 24, // k2
-        "tgf_threshold": 12.5546, // k3
-        "log_scale": 0.024404, // k4
-        "log_offset": 0.0119337 // k5
+        "tgf_threshold": 56.7755, // k3
+        "log_scale": 0.0107117, // k4
+        "log_offset": 0.073949 // k5
       },
       "cytokine_synthesis": {
         "description": "Shared cytokine synthesis feedback coefficients (Stem/Progen/NP create_cytokines)",
-        "tgf_baseline": 4.5069, // k8
-        "tgf_feedback_tgf": 0.00108182, // k9
-        "tgf_feedback_il1beta": 4.91092, // k10
-        "tgf_feedback_tnf": 5.29564, // k11
-        "tnf_baseline": 2.83107, // k12
-        "tnf_feedback_il1beta": 9.76202, // k13
-        "tnf_feedback_tgf_denom": 6.82392, // k14
-        "il1beta_baseline": 3.68417, // k15
-        "il1beta_feedback_tnf": 2.17694, // k16
-        "il1beta_feedback_tgf_denom": 5.54197 // k17
+        "tgf_baseline": 37.0191, // k8
+        "tgf_feedback_tgf": 0.0122894, // k9
+        "tgf_feedback_il1beta": 7.23062, // k10
+        "tgf_feedback_tnf": 2.75687, // k11
+        "tnf_baseline": 2.91328, // k12
+        "tnf_feedback_il1beta": 7.82742, // k13
+        "tnf_feedback_tgf_denom": 1.38876, // k14
+        "il1beta_baseline": 3.99928, // k15
+        "il1beta_feedback_tnf": 3.42906, // k16
+        "il1beta_feedback_tgf_denom": 1.75295 // k17
       }
     },
     "stem": {
@@ -109,90 +109,91 @@
       },
       "cytokine_synthesis": {
         "description": "MSC baseline cytokine secretion rates",
-        "tgf_baseline": 4.72112, // m8
+        "tgf_baseline": 2.26144, // m8
         "tnf_baseline": 0, // m9
         "il1beta_baseline": 0 // m10
       },
       "collagen_synthesis": {
-        "baseline_rate": 97.0287 // m11
+        "baseline_rate": 1.19582 // m11
       },
       "aggrecan_synthesis": {
         "tgf_threshold": 100000 // m12
       },
       "proliferation": {
-        "tgf_threshold": 89.8243, // m3
-        "tnf_effect": 0.00114056, // m5
-        "il1beta_effect": 0.0202603, // m6
-        "elasticity_effect": 4.45539 // m7
+        "tgf_threshold": 64.3697, // m3
+        "static_probability": 54.1542, // m4
+        "tnf_effect": 0.00169227, // m5
+        "il1beta_effect": 0.00306597, // m6
+        "elasticity_effect": 0.0223537 // m7
       },
       "differentiation": {
         "asymmetric_probability": 0.7, // m13
+        "static_probability": 26.6509, // m14
         "baseline_probability": 0.5, // m15
-        "tgf_effect": 0.0217041, // m16
-        "hours_between_attempts": 47.9263 // m17
+        "tgf_effect": 0.627256, // m16
+        "hours_between_attempts": 48 // m17
       }
     },
     "progen": {
-      "ocr_fmol_per_hour_per_cell": 78.4298, // N/A
+      "ocr_fmol_per_hour_per_cell": 30.46, // N/A
       "apoptosis_chance": 0.001, // N/A
       "migration": {
         "elasticity_effect": 0.11, // p1
         "baseline_speed": 0.83 // p2
       },
       "cytokine_synthesis": {
-        "tgf_baseline": 1.22988, // p4
-        "tnf_baseline": 9.77892, // p5
+        "tgf_baseline": 1.89715, // p4
+        "tnf_baseline": 4.50301, // p5
         "il1beta_baseline": 0 // p6
       },
       "aggrecan_synthesis": {
-        "baseline_rate": 1.05608 // p7
+        "baseline_rate": 3.71819 // p7
+      },
+      "differentiation": {
+        "static_probability": 30.4619 // N/A
       }
     },
     "np": {
-      "ocr_fmol_per_hour_per_cell": 38.9979, // N/A
-      "apoptosis_chance": 1.5, // N/A
+      "ocr_fmol_per_hour_per_cell": 15.31, // N/A
+      "apoptosis_chance": 6.5, // N/A
       "migration": {
         "elasticity_effect": 0.11, // k0
         "baseline_speed": 1.3 // k1
       },
       "collagen_synthesis": {
-        "scaling_factor": 45.3727, // k18
-        "time_effect": 1.89255, // k19
-        "baseline_rate": 3.22622 // k20
+        "scaling_factor": 1.82987, // k18
+        "time_effect": 2.24661, // k19
+        "baseline_rate": 3.38625 // k20
       },
       "aggrecan_synthesis": {
-        "scaling_factor": 82.9212, // k21
-        "time_effect": 64.0378, // k22
-        "baseline_rate": 43.0573 // k23
+        "scaling_factor": 12.794, // k21
+        "time_effect": 7.31176, // k22
+        "baseline_rate": 53.2741 // k23
       }
     },
     "biomaterial": {
       "elastic_modulus": {
         "description": "Ca-Alg hydrogel elastic modulus regression (initializeCaAlg)",
-        "intercept": 125, // c1
-        "alginate_concentration": 58, // c2
-        "crosslinker_density": 971, // c3
-        "alginate_molecular_weight": 1.037, // c4
-        "alginate_crosslinker_interaction": 756, // c5
-        "alginate_mw_interaction": 0.516, // c6
-        "mw_crosslinker_interaction": 0.165 // c7
+        "intercept": -1.619, // c1
+        "crosslinker_density": 8592, // c2
+        "alginate_molecular_weight": 0.0015 // c3
       },
       "pore_size": {
-        "crosslinker_effect": 1769.8, // c8
-        "baseline": 258.5 // c9
+        "crosslinker_effect": 1769.8, // c4
+        "baseline": 258.5 // c5
       },
       "mass_loss": {
-        "baseline": 0.234, // c10
-        "crosslinker_effect": 7.785, // c11
-        "time_effect": 0.15, // c12
-        "crosslinker_time_interaction": 1.36 // c13
+        "baseline": 0.234, // c6
+        "crosslinker_effect": 7.785, // c7
+        "time_effect": 0.15, // c8
+        "crosslinker_time_interaction": 1.36 // c9
       },
       "swell_ratio": {
-        "baseline": 72.478, // c14
-        "time_effect": 0.131, // c15
-        "alginate_concentration_effect": 22.034, // c16
-        "time_crosslinker_interaction": 3.284, // c17
-        "alginate_crosslinker_interaction": 35.752 // c18
+        "baseline": 72.478, // c10
+        "time_effect": 0.131, // c11
+        "alginate_concentration_effect": 22.034, // c12
+        "time_crosslinker_interaction": 3.284, // c13
+        "alginate_crosslinker_interaction": 35.752 // c14
       }
     }
   }
