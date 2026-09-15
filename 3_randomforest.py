@@ -23,7 +23,7 @@ random_seed = 1
 n_trees = 500
 input_file = "input_home_filtered.xlsx" # cleaned/filtered input file
 output_file = "day3.xlsx" # output file for the timepoint to run RF on
-model_type = "classification" 
+model_type = "regression" 
 
 # -----------------------------------------------------------------------
 
@@ -41,9 +41,14 @@ def load_and_clean_inputs(path):
         kept_cols -- original column numbers that were kept (for labeling)
     """
     X_raw = pd.read_excel(path, header=None)
+    
+    X_raw = X_raw.iloc[:, 1:]          # drop sample_num
+    X_raw.columns = range(X_raw.shape[1])   # renumber so X-labels are correct
  
     variances = X_raw.var(axis=0, skipna=True)
-    nonzero_var_mask = variances > 0
+    n_unique = X_raw.nunique(dropna=True)
+
+    nonzero_var_mask = (variances > 0) & (n_unique > 1)
  
     kept_cols = X_raw.columns[nonzero_var_mask]
     removed_cols = X_raw.columns[~nonzero_var_mask]
@@ -70,6 +75,23 @@ def plot_correlation_heatmap(X_clean, out_path="correlation_heatmap.png"):
     and rendered as a heatmap.
     """
     corr = X_clean.corr()
+    
+    nan_mask = corr.isna()
+    print("total NaN cells in corr:", nan_mask.values.sum())
+    
+    bad_cols = corr.columns[nan_mask.any()]
+    print("columns involved:", list(bad_cols))
+    
+    print("\nper-column diagnostics:")
+    print(pd.DataFrame({
+        "n_nan":    X_clean[bad_cols].isna().sum(),
+        "n_unique": X_clean[bad_cols].nunique(),
+        "var":      X_clean[bad_cols].var(),
+        "dtype":    X_clean[bad_cols].dtypes,
+    }))
+    
+    print("\nany inf:", np.isinf(X_clean.select_dtypes("number")).values.any())
+    print("non-numeric columns:", list(X_clean.select_dtypes(exclude="number").columns))
  
     # Hierarchical clustering on the correlation matrix to determine a
     # reordering of columns
@@ -120,7 +142,7 @@ def run_rf(X, Y, y_name, model_type=model_type,
     print(f"Saved variable importance plot to '{out_path}'.")
  
     return model, importances
-
+# %%
 def main():
     # --- Load and clean inputs -------------------------------------------
     X_clean, X_raw, kept_labels = load_and_clean_inputs(input_file)
@@ -131,16 +153,18 @@ def main():
     # --- Load outputs -------------------------------------------------------
     output = pd.read_excel(output_file, header=None)
  
-    # --- Collagen (column 6) --------------------------------------
-    Y_coll = output.iloc[:, 5]
+    # --- Collagen (column 7) --------------------------------------
+    Y_coll = output.iloc[:, 6]
     run_rf(X_clean, Y_coll, "collagen")
  
-    # --- TGF-B (column 5) -----------------------------------------
-    Y_tgf = output.iloc[:, 4]
+    # --- TGF-B (column 7) -----------------------------------------
+    Y_tgf = output.iloc[:, 5]
     run_rf(X_clean, Y_tgf, "TGF-B")
  
-    # --- % Differentiation (column 20) ----------------------------
-    Y_diff = output.iloc[:, 19]
+    # --- % Differentiation (column 22) ----------------------------
+    Y_diff = output.iloc[:, 21]
+    print(Y_diff.tolist())
+    print("nunique:", Y_diff.nunique(), "dtype:", Y_diff.dtype)
     run_rf(X_clean, Y_diff, "pct_differentiation")
  
  
