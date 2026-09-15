@@ -3,3 +3,5 @@
 samples/
 bad_samples.txt
 day*.xslx
+input_home.xslx
+input_home_filtered.xlsx
