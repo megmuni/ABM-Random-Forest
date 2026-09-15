@@ -1,0 +1,5 @@
+# ignore files that have to do with outputted data
+*.png
+samples/
+bad_samples.txt
+day*.xslx
