@@ -2,6 +2,6 @@
 *.png
 samples/
 bad_samples.txt
-day*.xslx
+day*.xlsx
 input_home.xlsx
 input_home_filtered.xlsx
