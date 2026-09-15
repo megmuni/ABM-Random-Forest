@@ -58,7 +58,8 @@ def check_sample(num):
     # if file can't be parsed as numeric
     # data at all, throw an error and treat it as a bad run
     try:
-        data = pd.read_csv(filepath, header=None).to_numpy(dtype=float)
+        df_raw = pd.read_csv(filepath, header=0)
+        data = df_raw.iloc[:, 1:].to_numpy(dtype=float)
     except Exception as e:
         return False, f"failed to read/parse ({e})", None
  
@@ -86,13 +87,13 @@ def main():
  
         # verify output file has enough rows for every requested
         # timepoint before pulling from it
-        max_row_needed = max(timepoint_rows.values())
+        max_row_needed = max(TIMEPOINT_ROWS.values())
         if data.shape[0] <= max_row_needed:
             bad_samples.append((num, f"too few rows ({data.shape[0]}, needed >{max_row_needed})"))
             continue
  
         good_sample_numbers.append(num)
-        for tp, row_idx in timepoint_rows.items():
+        for tp, row_idx in TIMEPOINT_ROWS.items():
             timepoint_rows[tp].append(data[row_idx, :])
  
     # save each timepoint's collected rows to its own excel file
