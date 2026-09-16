@@ -28,6 +28,7 @@ TIMEPOINT_ROWS = { # row indices for different timepoints
     "day1": 49 - 1,
     "day2": 97 - 1,
     "day3": 145 - 1,
+    "day6": 289 - 1,
     # Uncomment / add more as needed
     # "day5": 241 - 1,
     # "day7": 337 - 1,
