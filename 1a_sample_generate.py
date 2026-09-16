@@ -26,7 +26,7 @@ from scipy.stats import truncnorm
 input_file = "parameters.xlsx"
 sheet_name = "Sheet1"
 output_file = "input_home.xlsx"
-n_iter = 10        # Number of iterations for RF
+n_iter = 100        # Number of iterations for RF
 n_par = 66          # Number of parameters
 rng_seed = None        # Set an int here for reproducibility, or leave None
 # -----------------------------------------------------------------------

@@ -17,7 +17,7 @@ import pandas as pd
 from pathlib import Path
 
 # --- Settings to edit -------------------------------------------------
-n_samples = 10
+n_samples = 100
 output_dir = Path("output_home")     # where output_<N>.csv files live
 input_home_file = "input_home.xlsx"          # produced by Part 1A
 filtered_input_file = "input_home_filtered.xlsx"
