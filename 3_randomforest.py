@@ -22,7 +22,7 @@ from sklearn.ensemble import RandomForestRegressor, RandomForestClassifier
 random_seed = 1
 n_trees = 500
 input_file = "input_home_filtered.xlsx" # cleaned/filtered input file
-output_file = "day3.xlsx" # output file for the timepoint to run RF on
+output_file = "day6.xlsx" # output file for the timepoint to run RF on
 model_type = "regression" 
 
 # -----------------------------------------------------------------------
